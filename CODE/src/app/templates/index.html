@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Crime Map</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" />
+  <!-- style sheets -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/css/bootstrap-slider.min.css"
+  />
+  <link rel="stylesheet" href="static/styles.css" />
+</head>
+
+<body>
+
+  <div class="container container-narrow">
+    <h1>Temporal Crime Map for LA</h1>
+    <p class="lead">Analyzing and visualizing crime through spacial and temporal axes.</p>
+    <div class="col-auto">
+        <button onclick="showLabel()" id="label" class="btn btn-primary mb-2"> Normal Mode </button>
+        <button onclick="showPred()" id="predict" class="btn btn-primary mb-2"> Prediction Mode </button>
+    </div>
+    <!-- <form id='predictForm' style="display:none">
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+              <input type="text" class="form-control mb-2" id="predDateRange" />
+            </div>
+            <div class="col-auto">
+              <button type="submit" id="predSubmitButton" class="btn btn-primary mb-2">Submit</button>
+            </div>
+        </div>
+    </form> -->
+
+    <form id="formDateFilter" onsubmit="return false;">
+      <div class="form-row align-items-center">
+        <!-- Date Picker -->
+        <div class="col-auto">
+          <input type="text" class="form-control mb-2" id="formDateRange" />
+        </div>
+        <!-- Day of Week Picker -->
+        <div class="col-auto" id="dayOfWeekDiv">
+          <div class="btn-group btn-group-toggle" role="group" id="formDayOfWeek" data-toggle="buttons">
+            <label class="btn btn-outline-secondary mb-2 active" data=0>
+              <input type="checkbox" checked autocomplete="off">Sun
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=1>
+              <input type="checkbox" checked autocomplete="off">Mon
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=2>
+              <input type="checkbox" checked autocomplete="off">Tue
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=3>
+              <input type="checkbox" checked autocomplete="off">Wed
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=4>
+              <input type="checkbox" checked autocomplete="off">Thu
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=5>
+              <input type="checkbox" checked autocomplete="off">Fri
+            </label>
+            <label class="btn btn-outline-secondary mb-2 active" data=6>
+              <input type="checkbox" checked autocomplete="off">Sat
+            </label>
+          </div>
+        </div>
+
+        <div id="radioButtons" style="display:none">
+            <input type="radio" name="show_type" value="prediction" checked> Prediction </input>
+            <input type="radio" name="show_type" value="label"> Label </input>
+        </div>
+
+        <div class="col-auto">
+          <button type="submit" id="formSubmitButton" class="btn btn-primary mb-2">Submit</button>
+        </div>
+        
+        <!-- Time Picker -->
+        <div id="timePickers" style="width:60%">
+            <div class="row">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="time-radios" id="radio-time-range" value="time-range" checked>
+              </div>
+              <div class="col-auto time-label text-center">
+                <div id="slider-time-range-start">00:00</div>
+              </div>
+              <div class="col-auto">
+                <input id="slider-time-range" type="text" />
+              </div>
+              <div class="col-auto time-label text-center">
+                <div id="slider-time-range-end">24:00</div>
+              </div>
+            </div>
+            <div class="row d-flex col-md-12">
+            </div>
+            <div class="row">
+              <div class="form-check">
+                <input class="form-check-input" type="radio" name="time-radios" id="radio-time-bin" value="time-bin">
+              </div>
+              <div class="col-auto time-label text-center">
+                <div id="slider-time-bin-hour">00:00</div>
+              </div>
+              <div class="col-auto">
+                <input id="slider-time-bin" type="text" />
+              </div>
+            </div>
+        </div>
+
+        <!-- CrimeCode -->
+        <!-- <form id="formName" method="get"> -->
+          <div id="checkboxes" class="container" align="center">
+            <label class="btn btn-outline-primary mb-2">
+            <input id="chkbx" type="checkbox" value="1" checked />Homicides/Kidnaps</label>
+            <label class="btn btn-outline-secondary mb-2">
+            <input id="chkbx" type="checkbox" value="2" checked/>Sexual Attacks</label>
+            <label class="btn btn-outline-success mb-2">
+            <input id="chkbx" type="checkbox"  value="3" checked/>Robberies</label>
+            <label class="btn btn-outline-danger mb-2">
+            <input id="chkbx" type="checkbox" value="4" checked/>Assaults</label>
+            <label class="btn btn-outline-warning mb-2">
+            <input id="chkbx" type="checkbox" value="5" checked/>Burglaries</label>
+            <label class="btn btn-outline-info mb-2">
+            <input id="chkbx" type="checkbox" value="6" checked/>Thefts</label>
+            <!-- <input type="submit" name="submit" value="Search" /> -->
+          </div>
+          <!-- <div class="col-auto">
+            <button type="submit" id="formSubmitButton" class="btn btn-primary mb-2">Submit</button>
+          </div> -->
+        <!-- </form> -->
+      <!-- </div> -->
+    </form>
+  </div>
+
+  <!-- Main Map -->
+  <div class="container container-narrow">
+    <div id="mainMap"></div>
+  </div>
+
+
+  <!-- Color Scale -->
+  <br>
+  <!-- <div class="container" align="center" id="colorScale" style = "width:100%">
+    <div class="inline-box" style="background-color: #e41a1c;"><p class="scale-text">Homicides/Kidnaps</p></div>
+    <div class="inline-box" style="background-color: #377eb8;"><p class="scale-text">Sexual Attacks</p></div>
+    <div class="inline-box" style="background-color: #4daf4a;"><p class="scale-text">Roberries</p></div>
+    <div class="inline-box" style="background-color: #984ea3;"><p class="scale-text">Assaults</p></div>
+    <div class="inline-box" style="background-color: #ff7f00;"><p class="scale-text">Burglaries</p></div>
+    <div class="inline-box" style="background-color: #aaaa00;"><p class="scale-text">Thefts</p></div>
+  </div> -->
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-slider/10.0.0/bootstrap-slider.js"></script>
+  <script src="https://cdn.jsdelivr.net/bootstrap.daterangepicker/2/daterangepicker.js"></script>
+  <script src="static/lib/d3.v3.min.js"></script>
+  <script src="static/lib/catiline.js" /></script>
+  <script src="static/lib/leaflet.shpfile.js" /></script>
+  <script src="static/lib/shp.js" /></script>
+  <script src="static/map.js" /></script>
+
+  <!-- Data Studio section -->
+  <iframe width="1200" height="675" src="https://datastudio.google.com/embed/reporting/1EZlAO-EmyH478d5LWqIcOm6NqtuooVOH/page/EaIQ" frameborder="0" style="margin: 100px 0 0 0; border:0" allowfullscreen></iframe>
+
+</body>
+
+</html>
