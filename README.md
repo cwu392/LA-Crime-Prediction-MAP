@@ -29,4 +29,4 @@ Language: Python Framework: Flask, HTML, CSS
 - Visit http://127.0.0.1:8080 (or whatever you configured the address to be)
 
 ![](/img/photo.jpg)
-![](/img/crime_map.png)
+![](/img/team15poster.jpg)
