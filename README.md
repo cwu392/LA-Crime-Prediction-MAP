@@ -1,3 +1,12 @@
+# This is the course project of Data Visualization:
+developed with Ben Chou, ChiLin Wu, Chiamin Wu, Dennis Sosa, Kairi Kozuma
+
+This project is using historical criminal records from 2010 ~ 2016 in LA
+to predict the regional dangerousness and visualize its result on the website.
+
+Language: Python
+Framework: Flask, HTML, CSS
+
 # Quick Start
 
 - `python3 -m virtualenv venv` to create the virtualenv folder.
@@ -14,4 +23,4 @@
 =======
 # LA-Crime-Prediction-MAP
 LA criminal prediction
->>>>>>> 223f8892ab1fb643ef753319e4e2be99e2bbaac3
+
