@@ -1,5 +1,5 @@
 # DESCRIPTION
-Authors: Ben Chou, ChiLin Wu, Chiamin Wu, Dennis Sosa, Kairi Kozuma
+Authors: Shu-Ho Chou, ChiLin Wu, Chiamin Wu, Dennis Sosa, Kairi Kozuma
 This package contains a Flask web server that can be used to analyze crime data with a map. The LA crime dataset was used as a basis for plotting crime, which is available here: https://www.kaggle.com/cityofLA/crime-in-los-angeles/data. The setup builds a local SQLite database from the included csv file, and the web server retrieves elements from that database.
 
 The website has two modes for analyzing crime. In the regular mode, temporal and type filters can be applied, so that the map is relevant to the particular user. In prediction mode, crime labels can be predicted using linear regression.
