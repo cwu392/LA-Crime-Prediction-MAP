@@ -28,3 +28,5 @@ Language: Python Framework: Flask, HTML, CSS
 - `python src/run.py` to run the webserver.
 - Visit http://127.0.0.1:8080 (or whatever you configured the address to be)
 
+![](/img/Image uploaded from iOS.jpg)
+![](/img/crime_map.png)
