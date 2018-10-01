@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Quick Start
 
 - `python3 -m virtualenv venv` to create the virtualenv folder.
@@ -11,3 +12,7 @@
 - Visit http://127.0.0.1:8080 (or whatever you configured the address to be)
 
 
+=======
+# LA-Crime-Prediction-MAP
+LA criminal prediction
+>>>>>>> 223f8892ab1fb643ef753319e4e2be99e2bbaac3
