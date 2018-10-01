@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Quick Start
 
 - `python3 -m virtualenv venv` to create the virtualenv folder.
